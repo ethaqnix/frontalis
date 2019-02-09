@@ -9,6 +9,7 @@ const TextInput = (props) => {
     <Input
       leftIconContainerStyle={theme.FormInput.icon}
       containerStyle={theme.FormInput.root}
+      inputContainerStyle={theme.FormInput.input}
       leftIcon={
         icon && (
         <Icon
