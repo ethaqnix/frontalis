@@ -1,15 +1,16 @@
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-import Login from '../login';
-import App from '../tabNavigation'
 import React from 'react';
 import {
   View,
-  Text
+  Text,
 } from 'react-native';
+import Login from '../login';
+import App from '../tabNavigation';
+
 
 const AppNavigator = createSwitchNavigator({
-  Login : {
-    screen: Login
+  Login: {
+    screen: Login,
   },
   App,
 });
