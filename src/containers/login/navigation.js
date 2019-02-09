@@ -1,20 +1,20 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import Login from './login';
 import {
   View,
-  Text
+  Text,
 } from 'react-native';
+import Login from './login';
 
 const HomeNavigator = createStackNavigator({
   Login: {
     screen: Login,
-    navigationOptions: (props) => ({
+    navigationOptions: () => ({
       header: null,
-    })
+    }),
   },
   Register: {
-    screen: () => <View><Text>{"Register"}</Text></View>,
+    screen: () => <View><Text>Register</Text></View>,
   },
 });
 

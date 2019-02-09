@@ -1,6 +1,8 @@
 const Button = {
   flex: 1,
-  margin: 20,
+  marginLeft: 15,
+  marginRight: 15,
+  margin: 5,
   titleStyle: {
     color: 'white',
   },
@@ -8,13 +10,18 @@ const Button = {
 
 const FormInput = {
   root: {
-    flex: 1,
-    padding: 10,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#005faa',
+
+    margin: 10,
   },
   icon: {
+    paddingRight: 15,
   },
   input: {
   },
+  color: '#005faa',
 };
 
 const theme = {

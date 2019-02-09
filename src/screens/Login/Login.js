@@ -17,25 +17,24 @@ const styles = {
     flex: 1,
   },
   app_image: {
-    /* tintColor: '#005faa', */
-    height: 170,
-    width: 170,
+    tintColor: '#005faa',
+    height: 160,
+    width: 160,
   },
   app_title: {
-    top: 0,
     fontSize: 35,
     fontWeight: 'bold',
-    /* color: '#005faa', */
+    color: '#005faa',
   },
   image_container: {
-    flex: 2,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  form_container: {
-    flex: 2,
+    paddingTop: 20,
+    paddingBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 2,
+  },
+  form_container: {
+    flex: 1,
   },
   button_container: {
     flex: 1,
@@ -57,15 +56,6 @@ class Login extends React.Component {
     const oauthNonce = 'zqdzd8bbn479601451180zqddzqzq';
     const oauthTimestamp = new Date().getTime();
     const redirectUrl = AuthSession.getRedirectUrl();
-
-    /* GET&https%3A%2F%2Fwww.flickr.com%2Fservices%2Foauth%2Frequest_token&
-    oauth_callback%3Dhttp%253A%252F%252Fwww.example.com
-    %26oauth_consumer_key%3D653e7a6ecc1d528c516cc8f92cf98611
-    %26oauth_nonce%3D95613465
-    %26oauth_signature_method%3DHMAC-SHA1
-    %26oauth_timestamp%3D1305586162
-    %26oauth_version%3D1.0
-*/
     const url2 = 'https://www.flickr.com/services/oauth/request_token';
     const param2 = `oauth_callback=${encodeURIComponent(redirectUrl)}`
     + `&oauth_consumer_key=${flickrAppID}`

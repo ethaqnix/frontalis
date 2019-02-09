@@ -14,7 +14,7 @@ const TextInput = (props) => {
         <Icon
           name={icon}
           size={24}
-          color="black"
+          color={theme.FormInput.color}
         />
         )
       }
