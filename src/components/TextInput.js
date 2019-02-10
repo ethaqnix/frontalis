@@ -1,8 +1,12 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, withTheme } from 'react-native-elements';
 import PropTypes from 'prop-types';
-
+import { FontAwesome } from '@expo/vector-icons';
+/* <Icon
+          name={icon}
+          size={24}
+          color={theme.FormInput.color}
+        /> */
 const TextInput = (props) => {
   const { theme, icon } = props;
   return (
@@ -12,11 +16,11 @@ const TextInput = (props) => {
       inputContainerStyle={theme.FormInput.input}
       leftIcon={
         icon && (
-        <Icon
-          name={icon}
-          size={24}
-          color={theme.FormInput.color}
-        />
+          <FontAwesome
+            name={icon}
+            size={24}
+            color={theme.FormInput.color}
+          />
         )
       }
       {...props}

@@ -2,15 +2,12 @@ import React from 'react';
 import {
   View, Image, Text, KeyboardAvoidingView, Keyboard,
 } from 'react-native';
-import { AuthSession } from 'expo';
+import PropTypes from 'prop-types';
 import { Button, FormInput } from '../../components';
-// import { Button } from 'react-native-elements';
+import AnimFromTop from '../../components/animations/AnimFromTop';
 
-const hmacsha1 = require('hmacsha1');
 const appLogo = require('../../assets/wheel.png');
 
-const flickrAppID = 'ce00aefd2a5961b696d3e0d869c1ab36';
-const flickrSecret = '14de5304c098c075';
 
 const styles = {
   main_container: {
@@ -25,6 +22,23 @@ const styles = {
     fontSize: 35,
     fontWeight: 'bold',
     color: '#005faa',
+  },
+  app_header_image: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '35%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  app_header_title: {
+    position: 'absolute',
+    top: '35%',
+    left: 0,
+    width: '100%',
+    height: '10%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image_container: {
     paddingTop: 20,
@@ -68,7 +82,7 @@ class Login extends React.Component {
     this.keyboardDidHideListener.remove();
   }
 
-  textChanged = (text, type) => {
+  textChanged = text => (type) => {
     switch (type) {
       case 'LOGIN':
         this.setState({ login: text });
@@ -92,39 +106,48 @@ class Login extends React.Component {
 
   render() {
     const { login, password, keyboard } = this.state;
+    const { navigation } = this.props;
+
     return (
       <KeyboardAvoidingView style={styles.main_container} behavior="padding">
-        <View style={{ ...styles.image_container, flex: keyboard ? 1 : 2 }}>
-          {
-            !keyboard && <Image style={styles.app_image} source={appLogo} />
-          }
+        <AnimFromTop
+          style={styles.app_header_image}
+          open={keyboard}
+        >
+          <Image style={styles.app_image} source={appLogo} />
+        </AnimFromTop>
+        <AnimFromTop
+          style={styles.app_header_title}
+          open={keyboard}
+          outputRange={-75}
+        >
           <Text style={styles.app_title}>Frontalis</Text>
-        </View>
+        </AnimFromTop>
+        <View style={{ ...styles.image_container, flex: keyboard ? 1 : 2 }} />
         <View style={styles.form_container}>
           <FormInput
             icon="user"
             style={styles.inputText}
             placeholder="LOGIN"
-            onChangeText={text => this.textChanged(text, 'LOGIN')}
+            onChangeText={this.textChanged('LOGIN')}
           />
           <FormInput
             icon="unlock-alt"
             style={styles.inputText}
             placeholder="PASSWORD"
-            onChangeText={text => this.textChanged(text, 'PASS')}
+            onChangeText={this.textChanged('PASS')}
           />
         </View>
         <View style={styles.button_container}>
           <Button
             onPress={() => {
-              this.props.navigation.navigate('App');
+              navigation.navigate('App');
             }}
             title="Sign In"
           />
           <Button
             onPress={() => {
-              console.log('plop');
-              this.props.navigation.navigate('Register');
+              navigation.navigate('Register');
             }}
             title="Register"
           />
@@ -133,5 +156,13 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  navigation: PropTypes.shape(),
+};
+
+Login.defaultProps = {
+  navigation: {},
+};
 
 export default Login;
