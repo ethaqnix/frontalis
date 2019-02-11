@@ -1,18 +1,14 @@
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-import Login from '../login';
-import Tutorial from '../../screens/Tutorial';
-import Home from '../../screens/Home/Home';
+import Login from './Login/Login';
+import App from './App';
 
 
 const AppNavigator = createSwitchNavigator({
-  Tutorial: {
-    screen: Tutorial,
+  App: {
+    screen: App,
   },
   Login: {
     screen: Login,
-  },
-  App: {
-    screen: Home,
   },
 });
 

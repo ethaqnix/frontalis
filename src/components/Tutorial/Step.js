@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Title from './Title';
 import Image from './Image';
-import { Icon as IconType, Img, onTimeout as onTimeoutType } from './types';
+import { Icon as IconType, Img } from './types';
 import Description from './Description';
 
 const styles = StyleSheet.create({
@@ -16,19 +16,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(({ step, navigation }: {
+export default function Step({ step }: {
   step: {
     icon: ?IconType,
     img: ?Img,
     title: ?string,
     description: ?string,
-    onTimeout: ?onTimeoutType
-  },
-  navigation: any
-}) => {
-  if (step.onTimeout) {
-    const timeout = setTimeout(step.onTimeout.onTimeout(navigation), step.onTimeout.timeout);
   }
+}) {
   return (
     <View style={styles.container}>
       {
@@ -45,4 +40,4 @@ export default withNavigation(({ step, navigation }: {
       }
     </View>
   );
-});
+}

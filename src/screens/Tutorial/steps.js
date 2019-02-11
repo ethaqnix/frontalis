@@ -33,11 +33,5 @@ export default [
   {
     img: 'none',
     title: 'C\'est parti',
-    onTimeout: {
-      timeout: 5000,
-      onTimeout: navigation => () => {
-        navigation?.navigate?.('App');
-      },
-    },
   },
 ];

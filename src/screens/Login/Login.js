@@ -1,16 +1,13 @@
 import React from 'react';
 import {
-  View, Image, Text, KeyboardAvoidingView,
+  View, Image, Text, KeyboardAvoidingView, Keyboard,
 } from 'react-native';
-import { AuthSession } from 'expo';
+import PropTypes from 'prop-types';
 import { Button, FormInput } from '../../components';
-// import { Button } from 'react-native-elements';
+import AnimFromTop from '../../components/animations/AnimFromTop';
 
-const hmacsha1 = require('hmacsha1');
-const appLogo = require('../../assets/RN_Logo.png');
+const appLogo = require('../../assets/wheel.png');
 
-const flickrAppID = 'ce00aefd2a5961b696d3e0d869c1ab36';
-const flickrSecret = '14de5304c098c075';
 
 const styles = {
   main_container: {
@@ -26,6 +23,23 @@ const styles = {
     fontWeight: 'bold',
     color: '#005faa',
   },
+  app_header_image: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '35%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  app_header_title: {
+    position: 'absolute',
+    top: '35%',
+    left: 0,
+    width: '100%',
+    height: '10%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   image_container: {
     paddingTop: 20,
     paddingBottom: 20,
@@ -35,61 +49,46 @@ const styles = {
   },
   form_container: {
     flex: 1,
+
   },
   button_container: {
     flex: 1,
-    justifyContent: 'space-around',
   },
 };
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.login = '';
-    this.password = '';
+
     this.state = {
-      result: null,
+      login: '',
+      password: '',
     };
   }
 
-  handlePressAsync = async () => {
-    const oauthNonce = 'zqdzd8bbn479601451180zqddzqzq';
-    const oauthTimestamp = new Date().getTime();
-    const redirectUrl = AuthSession.getRedirectUrl();
-    const url2 = 'https://www.flickr.com/services/oauth/request_token';
-    const param2 = `oauth_callback=${encodeURIComponent(redirectUrl)}`
-    + `&oauth_consumer_key=${flickrAppID}`
-    + `&oauth_nonce=${oauthNonce}`
-    + '&oauth_signature_method=HMAC-SHA1'
-    + `&oauth_timestamp=${oauthTimestamp}`
-    + '&oauth_version=1.0';
-    /* url2 = url2.replace(new RegExp(':', 'g'), '%3A');
-    url2 = url2.replace(new RegExp('/', 'g'), '%2F');
-    param2 = param2.replace(new RegExp(':', 'g'), '%253A');
-    param2 = param2.replace(new RegExp('/', 'g'), '%252F');
-    param2 = param2.replace(new RegExp('&', 'g'), '%26');
-    param2 = param2.replace(new RegExp('=', 'g'), '%3D'); */
-    const hash = hmacsha1(`${flickrSecret}&`, `GET&${url2}&${param2}`);
-    console.log(`GET&${url2}&${param2}`);
-    const jsonAnswer = fetch('https://www.flickr.com/services/oauth/request_token?'
-    + `oauth_consumer_key=${flickrAppID}`
-    + `&oauth_nonce=${oauthNonce}`
-    + '&oauth_signature_method=HMAC-SHA1'
-    + `&oauth_timestamp=${oauthTimestamp}`
-    + '&oauth_version=1.0'
-    + `&oauth_signature=${hash}`
-    + `&oauth_callback=${encodeURIComponent(redirectUrl)}`)
-      .then((data) => {
-        console.log(data.status);
-      });
-  };
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this.keyboardDidShow,
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this.keyboardDidHide,
+    );
+  }
 
-  textChanged(text, type) {
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  textChanged = text => (type) => {
     switch (type) {
       case 'LOGIN':
-        this.login = text;
+        this.setState({ login: text });
         break;
       case 'PASS':
+        this.setState({ login: text });
         this.password = text;
         break;
       default:
@@ -97,39 +96,58 @@ class Login extends React.Component {
     }
   }
 
+  keyboardDidShow = () => {
+    this.setState({ keyboard: true });
+  }
+
+  keyboardDidHide = () => {
+    this.setState({ keyboard: false });
+  }
+
   render() {
+    const { login, password, keyboard } = this.state;
+    const { navigation } = this.props;
+
     return (
       <KeyboardAvoidingView style={styles.main_container} behavior="padding">
-        <View style={styles.image_container}>
+        <AnimFromTop
+          style={styles.app_header_image}
+          open={keyboard}
+        >
           <Image style={styles.app_image} source={appLogo} />
-          <Text style={styles.app_title}>Native Legend</Text>
-        </View>
+        </AnimFromTop>
+        <AnimFromTop
+          style={styles.app_header_title}
+          open={keyboard}
+          outputRange={-75}
+        >
+          <Text style={styles.app_title}>Frontalis</Text>
+        </AnimFromTop>
+        <View style={{ ...styles.image_container, flex: keyboard ? 1 : 2 }} />
         <View style={styles.form_container}>
           <FormInput
             icon="user"
             style={styles.inputText}
             placeholder="LOGIN"
-            onChangeText={text => this.textChanged(text, 'LOGIN')}
+            onChangeText={this.textChanged('LOGIN')}
           />
           <FormInput
-            icon="user"
+            icon="unlock-alt"
             style={styles.inputText}
             placeholder="PASSWORD"
-            onChangeText={text => this.textChanged(text, 'PASS')}
+            onChangeText={this.textChanged('PASS')}
           />
         </View>
         <View style={styles.button_container}>
           <Button
             onPress={() => {
-              this.handlePressAsync();
-              this.props.navigation.navigate('App');
+              navigation.navigate('App');
             }}
             title="Sign In"
           />
           <Button
             onPress={() => {
-              console.log('plop');
-              this.props.navigation.navigate('Register');
+              navigation.navigate('Register');
             }}
             title="Register"
           />
@@ -138,5 +156,13 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  navigation: PropTypes.shape(),
+};
+
+Login.defaultProps = {
+  navigation: {},
+};
 
 export default Login;

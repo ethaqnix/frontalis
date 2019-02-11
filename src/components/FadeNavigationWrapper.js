@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
+import { StyleSheet, Animated } from 'react-native';
+import { connect } from 'react-redux';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -7,11 +9,26 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class FadeNavigationWrapper extends PureComponent {
+const mapStateToProps = ({ navigation }) => ({
+  fade: navigation.fade,
+});
+
+export default connect(
+  mapStateToProps,
+)(class FadeNavigationWrapper extends PureComponent {
   state: {
     opacity: number
   } = {
-    opacity: 1,
+    opacity: new Animated.Value(1),
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    const { fade } = this.props;
+    if (fade === false && nextProps.fade === true) {
+      this.fadeOut();
+    } else if (fade === true && nextProps.fade === false) {
+      this.fadeIn();
+    }
   }
 
   fadeIn = () => {
@@ -35,20 +52,22 @@ export default class FadeNavigationWrapper extends PureComponent {
   }
 
   props: {
-    children: React.Node
+    children: React.Node,
+    fade: Boolean,
+    dispatch: Function
   }
 
   render() {
     const { children } = this.props;
     const { opacity } = this.state;
     return (
-      <View style={[
+      <Animated.View style={[
         styles.container,
         { opacity },
       ]}
       >
         {children}
-      </View>
+      </Animated.View>
     );
   }
-}
+});
