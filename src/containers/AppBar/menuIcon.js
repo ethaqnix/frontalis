@@ -4,11 +4,12 @@ import { handleMenu } from '../../redux/actions/menu';
 
 const mapStateToProps = () => ({
   name: 'bars',
-  size: 16,
+  size: 30,
 });
 
 const mapDispatchToProps = dispatch => ({
   onPress: () => {
+    console.log('handleMenu');
     dispatch(handleMenu());
   },
 });

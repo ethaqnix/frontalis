@@ -6,7 +6,6 @@ const CustomTabBar = (props) => {
   const {
     leftComponent, onClickLeftComponent, title, rightComponent, onClickRightComponent, theme,
   } = props;
-
   return (
     <Header
       leftComponent={leftComponent}

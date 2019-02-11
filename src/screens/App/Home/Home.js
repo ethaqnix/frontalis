@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, withTheme } from 'react-native-elements';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
-import MenuIcon from '../../../containers/AppBar/menu';
+import MenuIcon from '../../../containers/AppBar/menuIcon';
+import AppBar from '../../../components/AppBar';
 
 class Home extends React.PureComponent {
   static navigationOptions = {
-    title: 'Home',
-    leftComponent: <MenuIcon />,
+    headerLeft: <MenuIcon />,
   };
 
   render() {
