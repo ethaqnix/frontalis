@@ -1,24 +1,20 @@
 import React from 'react';
 import { createSwitchNavigator } from 'react-navigation';
-<<<<<<< HEAD
+import { connect } from 'react-redux';
 import { View } from 'react-native';
 import Home from './Home';
-import Menu from '../../components/AppBar/Menu';
-=======
-import { connect } from 'react-redux';
-import Home from './Home';
+import Menu from '../../containers/menu';
 import Tutorial from '../Tutorial';
 
 import { fadeIn } from '../../redux/actions/navigation';
-import FadeNavigationWrapper from '../../components/FadeNavigationWrapper';
+import FadeNavigationWrapper from '../../components/animations/FadeNavigationWrapper';
 
->>>>>>> 314b7f9b3726b6314b4fc9cabe4a6e7b08d35378
 
 const AppNavigator = createSwitchNavigator({
+  Home,
   Tutorial: {
     screen: Tutorial,
   },
-  Home,
 });
 
 class CustomNavigator extends React.Component {
@@ -42,9 +38,12 @@ class CustomNavigator extends React.Component {
     const { navigation } = this.props;
 
     return (
-      <FadeNavigationWrapper>
-        <AppNavigator navigation={navigation} />
-      </FadeNavigationWrapper>
+      <View style={{ flex: 1 }}>
+        <FadeNavigationWrapper>
+          <AppNavigator navigation={navigation} />
+        </FadeNavigationWrapper>
+        <Menu navigation={navigation} />
+      </View>
     );
   }
 }

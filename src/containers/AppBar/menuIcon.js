@@ -9,7 +9,6 @@ const mapStateToProps = () => ({
 
 const mapDispatchToProps = dispatch => ({
   onPress: () => {
-    console.log('handleMenu');
     dispatch(handleMenu());
   },
 });

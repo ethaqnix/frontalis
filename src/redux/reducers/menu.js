@@ -9,12 +9,12 @@ export default function login(state = initialState, action) {
   switch (action.type) {
     case PRESS_MENU:
       return {
-        open: !state.open,
         ...state,
+        open: !state.open,
       };
     case CHANGE_PAGE:
       return {
-        currentPage: !state.open,
+        currentPage: action.newPage,
         open: false,
       };
     default:

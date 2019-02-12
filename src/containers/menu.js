@@ -1,20 +1,19 @@
 import { connect } from 'react-redux';
-import { FontAwesome } from '@expo/vector-icons';
 import { changePage } from '../redux/actions/menu';
+import Menu from '../components/AppBar/Menu';
 
-const mapStateToProps = () => ({
-  name: 'bars',
-  size: 30,
+const mapStateToProps = state => ({
+  open: state.menu.open,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onPress: () => {
-    console.log('handleMenu');
-    dispatch(changePage());
+  onPress: (route, navigate) => {
+    dispatch(changePage(route));
+    navigate(route);
   },
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(FontAwesome);
+)(Menu);

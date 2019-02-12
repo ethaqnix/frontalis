@@ -9,11 +9,7 @@ const TabBarNavigation = createStackNavigator(
     Home: {
       screen: Home,
       navigationOptions: () => ({
-        title: 'Test',
-        header: (props) => {
-          console.log(props);
-          return <AppBar leftComponent={<Menu />} {...props} />;
-        },
+        header: props => <AppBar leftComponent={<Menu />} title="Home" {...props} />,
       }),
     },
   }, {

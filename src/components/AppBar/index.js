@@ -2,10 +2,9 @@ import React from 'react';
 import { Header, withTheme } from 'react-native-elements';
 import PropTypes from 'prop-types';
 
+
 const CustomTabBar = (props) => {
-  const {
-    leftComponent, onClickLeftComponent, title, rightComponent, onClickRightComponent, theme,
-  } = props;
+  const { leftComponent, title, rightComponent } = props;
   return (
     <Header
       leftComponent={leftComponent}
@@ -31,8 +30,6 @@ CustomTabBar.propTypes = {
     }),
   ]),
   title: PropTypes.string,
-  onClickLeftComponent: PropTypes.func,
-  onClickRightComponent: PropTypes.func,
   theme: PropTypes.shape().isRequired,
 };
 
@@ -40,8 +37,6 @@ CustomTabBar.defaultProps = {
   title: null,
   leftComponent: null,
   rightComponent: null,
-  onClickLeftComponent: null,
-  onClickRightComponent: null,
 };
 
 export default withTheme(CustomTabBar);

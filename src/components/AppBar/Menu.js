@@ -1,57 +1,56 @@
 import React from 'react';
-import { withTheme, ListItem } from 'react-native-elements';
+import { withTheme, ListItem, Divider } from 'react-native-elements';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { StatusBar, StyleSheet } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import { Header } from 'react-navigation';
+import AnimFromLeft from '../animations/AnimFromLeft';
 
-const styles = (props) => {
-  console.log(props);
-  return ({
-    root: {
-      top: 24,
-      width: 100,
-      position: 'absolute',
-      backgroundColor: 'red',
-    },
-  });
-};
-
-const themedStyles = withTheme(styles);
+const styles = StyleSheet.create({
+  root: {
+    position: 'absolute',
+    zIndex: 1,
+    padding: 4,
+    height: '100%',
+    width: '50%',
+    marginTop: Header.HEIGHT + StatusBar.currentHeight,
+    backgroundColor: '#004E99',
+    borderRightWidth: 2,
+    borderColor: '#005faa',
+  },
+  item: {
+  },
+});
 
 const MenuContainer = (props) => {
-  const { fonctionalities } = props;
+  const {
+    open, onPress, navigation,
+  } = props;
   return (
-    <View styles={themedStyles.root}>
+    <AnimFromLeft open={open} style={styles.root}>
       {
-        fonctionalities.map(fonctionality => (
+        navigation.state.routes.map(route => (
           <ListItem
-            key={fonctionality.name}
-            title={fonctionality.name}
-            leftIcon={<FontAwesome name={fonctionality.icon} size={16} />}
+            containerStyle={styles.item}
+            key={route.key}
+            title={route.routeName}
+            leftElement={<FontAwesome name={route.icon} size={16} />}
+            onPress={() => onPress(route.key, navigation.navigate)}
+            bottomDivider={<Divider style={{ backgroundColor: '005faa' }} />}
           />
         ))
-}
-    </View>
+        }
+    </AnimFromLeft>
   );
 };
 
 MenuContainer.propTypes = {
-  fonctionalities: PropTypes.arrayOf([
-    PropTypes.objectOf({
-      name: PropTypes.string,
-      icon: PropTypes.string,
-    }),
-  ]),
+  open: PropTypes.bool.isRequired,
+  navigation: PropTypes.shape({}).isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 MenuContainer.defaultProps = {
-  fonctionalities: [{
-    name: 'Home',
-    icon: 'home',
-  }, {
-    name: 'Profile',
-    icon: 'user',
-  }],
 };
 
 export default withTheme(MenuContainer);

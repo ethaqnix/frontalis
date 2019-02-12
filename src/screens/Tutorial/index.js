@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import steps from './steps';
 import Step from '../../components/Tutorial/Step';
 import { fadeOut } from '../../redux/actions/navigation';
-import FadeNavigationWrapper from '../../components/FadeNavigationWrapper';
+import FadeNavigationWrapper from '../../components/animations/FadeNavigationWrapper';
 
 
 // const styles = StyleSheet.create({

@@ -4,7 +4,7 @@ export const handleMenu = () => ({
   type: types.PRESS_MENU,
 });
 
-export const changePage = () => ({
+export const changePage = newPage => ({
   type: types.CHANGE_PAGE,
-})
-;
+  newPage,
+});

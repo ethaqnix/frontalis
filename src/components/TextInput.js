@@ -2,11 +2,7 @@ import React from 'react';
 import { Input, withTheme } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { FontAwesome } from '@expo/vector-icons';
-/* <Icon
-          name={icon}
-          size={24}
-          color={theme.FormInput.color}
-        /> */
+
 const TextInput = (props) => {
   const { theme, icon } = props;
   return (
