@@ -3,9 +3,15 @@ import { AppLoading } from 'expo';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'react-native-elements';
 import FontAwesome from '@expo/vector-icons/fonts/FontAwesome.ttf';
+import { ApolloProvider } from 'react-apollo';
+import ApolloClient from 'apollo-boost';
 import store from './redux/configureStore';
 import Root from './screens';
 import theme from './styles';
+
+const client = new ApolloClient({
+  uri: 'http://192.168.1.68:8080/graphql',
+});
 
 class Main extends React.Component {
   constructor(props) {
@@ -28,9 +34,11 @@ class Main extends React.Component {
     }
     return (
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <Root />
-        </ThemeProvider>
+        <ApolloProvider client={client}>
+          <ThemeProvider theme={theme}>
+            <Root />
+          </ThemeProvider>
+        </ApolloProvider>
       </Provider>
     );
   }

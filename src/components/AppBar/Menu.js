@@ -1,5 +1,5 @@
 import React from 'react';
-import { withTheme, ListItem, Divider } from 'react-native-elements';
+import { withTheme, ListItem } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { StatusBar, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
@@ -36,7 +36,7 @@ const MenuContainer = (props) => {
             title={route.routeName}
             leftElement={<FontAwesome name={route.icon} size={16} />}
             onPress={() => onPress(route.key, navigation.navigate)}
-            bottomDivider={<Divider style={{ backgroundColor: '005faa' }} />}
+            bottomDivider
           />
         ))
         }

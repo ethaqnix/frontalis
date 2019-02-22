@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class AnimFromleft extends React.Component {
   constructor(props) {
     super(props);
-    this.x_translate = new Animated.Value(0);
+    this.x_translate = new Animated.Value(props.open ? 1 : 0);
     this.state = {
       open: false,
       update: false,
@@ -23,7 +23,7 @@ class AnimFromleft extends React.Component {
   }
 
   openMenu() {
-    this.x_translate.setValue(1);
+    this.x_translate.setValue(0);
     Animated.spring(
       this.x_translate,
       {
@@ -34,7 +34,7 @@ class AnimFromleft extends React.Component {
   }
 
   hideMenu() {
-    this.x_translate.setValue(0);
+    this.x_translate.setValue(1);
     Animated.spring(
       this.x_translate,
       {
@@ -82,6 +82,7 @@ AnimFromleft.propTypes = {
   style: PropTypes.shape(),
   children: PropTypes.node,
   outputRange: PropTypes.number,
+  open: PropTypes.bool,
 };
 
 AnimFromleft.defaultProps = {
@@ -90,6 +91,7 @@ AnimFromleft.defaultProps = {
   },
   children: null,
   outputRange: -300,
+  open: true,
 };
 
 export default AnimFromleft;

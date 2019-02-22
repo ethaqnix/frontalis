@@ -3,11 +3,11 @@ import { createSwitchNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
 import Home from './Home';
-import Menu from '../../containers/menu';
 import Tutorial from '../Tutorial';
 
 import { fadeIn } from '../../redux/actions/navigation';
 import FadeNavigationWrapper from '../../components/animations/FadeNavigationWrapper';
+import Menu from '../../containers/menu';
 
 
 const AppNavigator = createSwitchNavigator({
@@ -40,9 +40,9 @@ class CustomNavigator extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <FadeNavigationWrapper>
+          <Menu navigation={navigation} />
           <AppNavigator navigation={navigation} />
         </FadeNavigationWrapper>
-        <Menu navigation={navigation} />
       </View>
     );
   }

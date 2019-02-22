@@ -1,0 +1,2 @@
+export const PRESS_SEARCH = 'PRESS_SEARCH';
+export const CHANGE_SEARCH = 'CHANGE_SEARCH';

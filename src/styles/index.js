@@ -26,9 +26,18 @@ const FormInput = {
   color: '#005faa',
 };
 
+const Card = {
+  borderRadius: 4,
+  margin: 24,
+  padding: 16,
+  borderWidth: 1,
+  borderColor: 'black',
+};
+
 const theme = {
   Button,
   FormInput,
+  Card,
   colors: {
     primary: '#005faa',
     secondary: '#333333',

@@ -1,14 +1,22 @@
 import React from 'react';
-import { Text, withTheme } from 'react-native-elements';
-import { View } from 'react-native';
+import { withTheme } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
+import Search from '../../../containers/search';
+import TravelList from '../../../containers/home';
 
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+});
 class Home extends React.PureComponent {
   render() {
-    const { theme } = this.props;
+    const { theme, navigation } = this.props;
     return (
-      <View>
-        <Text>{ theme?.test ? 'Accueil' : 'autre' }</Text>
+      <View style={styles.root}>
+        <Search />
+        <TravelList />
       </View>
     );
   }

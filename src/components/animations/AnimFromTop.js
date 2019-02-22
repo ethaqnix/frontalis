@@ -5,7 +5,7 @@ import propTypes from 'prop-types';
 class AnimFromTop extends React.Component {
   constructor(props) {
     super(props);
-    this.y_translate = new Animated.Value(0);
+    this.y_translate = new Animated.Value(props.open ? 0 : 1);
     this.state = {
       open: false,
       update: false,
@@ -27,7 +27,7 @@ class AnimFromTop extends React.Component {
     Animated.spring(
       this.y_translate,
       {
-        toValue: 1,
+        toValue: 0,
         friction: 10,
       },
     ).start();
@@ -38,7 +38,7 @@ class AnimFromTop extends React.Component {
     Animated.spring(
       this.y_translate,
       {
-        toValue: 0,
+        toValue: 1,
         friction: 10,
       },
     ).start();
@@ -85,6 +85,7 @@ AnimFromTop.propTypes = {
     propTypes.arrayOf(propTypes.element),
   ]),
   outputRange: propTypes.number,
+  open: propTypes.bool,
 };
 
 AnimFromTop.defaultProps = {
@@ -93,6 +94,7 @@ AnimFromTop.defaultProps = {
   },
   children: null,
   outputRange: -300,
+  open: true,
 };
 
 export default AnimFromTop;
