@@ -91,9 +91,13 @@ export default class DateTimePicker extends Component {
 
   onTimePicked = (time) => {
     const { date } = this.state;
+    const { onSelect } = this.props;
+    const selectedDate = new Date(date);
+    selectedDate.setHours(time.hour, time.minute);
+    onSelect(selectedDate);
     this.setState({
       time,
-      text: `${moment(date).format('DD MMM, YYYY')} - ${time.hour}h ${time.minute}`,
+      text: `${moment(date).format('DD MMM')} - ${time.hour}h ${time.minute}`,
     });
   }
 
@@ -131,8 +135,10 @@ export default class DateTimePicker extends Component {
 
 DateTimePicker.propTypes = {
   label: PropTypes.string,
+  onSelect: PropTypes.func,
 },
 
 DateTimePicker.defaultProps = {
   label: '',
+  onSelect: null,
 };

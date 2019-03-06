@@ -9,12 +9,18 @@ mutation addUser($name: String!) {
 `;
 
 export const ADD_TRAVEL = gql`
-mutation AddUser($driver: string, $locations: [string], $members: [string], $startAt: string, $endAt: string) {
-  addTodo(driver: $driver, locations: $locations, members: $members, startAt: $startAt, endAt: $endAt) {
+mutation addTravel($driver: String, $locations: [String]!, $members: [String]!, $startAt: String, $endAt: String!) {
+  addTravel(driver: $driver, locations: $locations, members: $members, startAt: $startAt, endAt: $endAt) {
     id
-    driver
-    locations
-    members
+    driver {
+      id
+    }
+    locations {
+      id
+    }
+    members {
+      id
+    }
     startAt
     endAt
   }

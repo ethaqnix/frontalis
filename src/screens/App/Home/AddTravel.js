@@ -1,17 +1,15 @@
 import React from 'react';
 import {
-  KeyboardAvoidingView, Keyboard, View,
+  View, StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Input } from 'react-native-elements';
 import { Mutation } from 'react-apollo';
-// tmp
-import gql from 'graphql-tag';
 import DateTimePicker from '../../../components/Picker/DateTimePicker/DateTimePicker';
 import Button from '../../../components/Button';
-// import { ADD_USER } from '../../../utils/mutations';
+import { ADD_TRAVEL } from '../../../utils/mutations';
 
-const styles = {
+const styles = StyleSheet.create({
   main_container: {
     flex: 1,
     margin: 16,
@@ -23,95 +21,105 @@ const styles = {
   actions: {
 
   },
-};
+});
 
 class AddTravel extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      keyboard: false,
+      endAt: null,
+      startAt: null,
+      locations: ['', ''],
     };
   }
 
-  componentDidMount() {
-    this.keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      this.keyboardDidShow,
-    );
-    this.keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      this.keyboardDidHide,
-    );
-  }
-
-  componentWillUnmount() {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
-  textChanged = type => (text) => {
+  dateChanged = type => (value) => {
     switch (type) {
       case 'start':
-        this.setState({ start: text });
+        this.setState({ startAt: value.toString() });
         break;
       case 'end':
-        this.setState({ end: text });
+        this.setState({ endAt: value.toString() });
         break;
       default:
         break;
     }
   }
 
-  keyboardDidShow = () => {
-    this.setState({ keyboard: true });
-  }
-
-  keyboardDidHide = () => {
-    this.setState({ keyboard: false });
+  checkInsertTravel = () => {
+    const { locations, startAt, endAt } = this.state;
+    const { navigation } = this.props;
+    return (
+      locations
+      && locations.length === 2
+      && navigation.getParam('start')?.id
+      && navigation.getParam('end')?.id
+      && startAt !== null
+      && endAt !== null
+    );
   }
 
   render() {
-    const { keyboard } = this.state;
+    const {
+      startAt, endAt,
+    } = this.state;
     const { navigation } = this.props;
 
-
-    const ADD_USER = gql`
-mutation AddUser($name: String!) {
-  addUser(name: $name) {
-    name
-  }
-}
-`;
     return (
-      <Mutation mutation={ADD_USER}>
-        {(addUser, { data }) => (
-          <KeyboardAvoidingView style={styles.main_container} behavior="padding">
+      <Mutation mutation={ADD_TRAVEL}>
+        {(addTravel, { data }) => (
+          <View style={styles.main_container}>
             <View>
               <View style={styles.form}>
                 <Input
+                  value={navigation.getParam('start', { address: '' }).address}
                   placeholder="Lieu de départ"
-                  onChangeText={this.textChanged('start')}
+                  onFocus={() => {
+                    navigation.navigate('SelectLocation', {
+                      type: 'start',
+                    });
+                  }}
                 />
-                <DateTimePicker label="Date de départ" />
+                <DateTimePicker label="Date de départ" onSelect={this.dateChanged('start')} />
               </View>
               <View style={styles.form}>
                 <Input
+                  value={navigation.getParam('end', { address: '' }).address}
                   placeholder="Lieu d'arrivé"
-                  onChangeText={this.textChanged('end')}
+                  onFocus={() => {
+                    navigation.navigate('SelectLocation', {
+                      type: 'end',
+                    });
+                  }}
                 />
-                <DateTimePicker label={"Date d'arrivé"} />
+                <DateTimePicker label={"Date d'arrivé"} onSelect={this.dateChanged('end')} />
               </View>
             </View>
             <View style={styles.actions}>
               <Button
                 onPress={() => {
-                  addUser({ variables: { name: 'plop' } });
-                }}
+                  if (this.checkInsertTravel()) {
+                    addTravel({
+                      variables: {
+                        driver: 'ObjectId("5c6f657dd233c065b77939b3")',
+                        locations: [
+                          navigation.getParam('start').id,
+                          navigation.getParam('end').id,
+                        ],
+                        members: ['5c6f657dd233c065b77939b3'],
+                        startAt: startAt.toString(),
+                        endAt: endAt.toString(),
+                      },
+                    });
+                    navigation.navigate('Home');
+                  }
+                }
+                }
                 title="Valider"
               />
             </View>
-          </KeyboardAvoidingView>
+          </View>
         )}
       </Mutation>
     );

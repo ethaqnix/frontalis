@@ -25,6 +25,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-elements": "^1.0.0-beta7",
     "react-native-linear-gradient": "^2.5.3",
+    "react-native-material-dropdown": "^0.11.1",
     "react-native-paper": "^2.7.0",
     "react-native-swipe-gestures": "^1.0.3",
     "react-native-swiper": "^1.5.14",

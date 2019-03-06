@@ -10,7 +10,7 @@ import Root from './screens';
 import theme from './styles';
 
 const client = new ApolloClient({
-  uri: 'http://192.168.1.68:8080/graphql',
+  uri: 'http://192.168.1.16:8080/graphql',
 });
 
 class Main extends React.Component {
