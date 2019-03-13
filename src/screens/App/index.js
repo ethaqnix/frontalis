@@ -40,8 +40,8 @@ class CustomNavigator extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <FadeNavigationWrapper>
-          <Menu navigation={navigation} />
           <AppNavigator navigation={navigation} />
+          <Menu navigation={navigation} />
         </FadeNavigationWrapper>
       </View>
     );

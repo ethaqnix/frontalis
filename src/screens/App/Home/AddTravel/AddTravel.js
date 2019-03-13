@@ -5,9 +5,9 @@ import {
 import PropTypes from 'prop-types';
 import { Input } from 'react-native-elements';
 import { Mutation } from 'react-apollo';
-import DateTimePicker from '../../../components/Picker/DateTimePicker/DateTimePicker';
-import Button from '../../../components/Button';
-import { ADD_TRAVEL } from '../../../utils/mutations';
+import DateTimePicker from '../../../../components/Picker/DateTimePicker/DateTimePicker';
+import Button from '../../../../components/Button';
+import { ADD_TRAVEL } from '../../../../utils/mutations';
 
 const styles = StyleSheet.create({
   main_container: {
@@ -100,9 +100,10 @@ class AddTravel extends React.Component {
               <Button
                 onPress={() => {
                   if (this.checkInsertTravel()) {
+                    console.log(`value : ${navigation.getParam('start').id} of type ${typeof navigation.getParam('start').id}`)
                     addTravel({
                       variables: {
-                        driver: 'ObjectId("5c6f657dd233c065b77939b3")',
+                        driver: '5c6f657dd233c065b77939b3',
                         locations: [
                           navigation.getParam('start').id,
                           navigation.getParam('end').id,
@@ -112,6 +113,7 @@ class AddTravel extends React.Component {
                         endAt: endAt.toString(),
                       },
                     });
+                    console.log(navigation.getParam('start').id);
                     navigation.navigate('Home');
                   }
                 }

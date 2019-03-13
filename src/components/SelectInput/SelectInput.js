@@ -40,6 +40,7 @@ class SelectInput extends React.PureComponent {
 }
 
 SelectInput.propTypes = {
+  navigation: PropTypes.shape({}).isRequired,
   placeholder: PropTypes.string,
   data: PropTypes.arrayOf(
     PropTypes.shape(),

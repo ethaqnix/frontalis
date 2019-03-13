@@ -2,20 +2,18 @@ import { createStackNavigator } from 'react-navigation';
 import { View } from 'react-native';
 import React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { Icon } from 'react-native-elements';
 import Home from './Home';
 import AppBar from '../../../components/AppBar';
 import Menu from '../../../containers/AppBar/menuIcon';
 import SearchIcon from '../../../containers/AppBar/searchIcon';
-import AddTravel from './AddTravel';
-import SelectLocation from './SelectLocation';
+import AddTravelNav from './AddTravel';
 
 const TabBarNavigation = createStackNavigator(
   {
     Home: {
       screen: Home,
-      navigationOptions: () => ({
-        header: props => (
+      navigationOptions: navProps => ({
+        header: () => (
           <AppBar
             leftComponent={<Menu />}
             title="Home"
@@ -33,7 +31,7 @@ const TabBarNavigation = createStackNavigator(
                   name="plus"
                   size={30}
                   style={{ padding: 8 }}
-                  onPress={() => { props.navigation.navigate('AddTravel'); }}
+                  onPress={() => { navProps.navigation.navigate('AddTravel'); }}
                 />
               </View>
 )}
@@ -42,38 +40,13 @@ const TabBarNavigation = createStackNavigator(
       }),
     },
     AddTravel: {
-      screen: AddTravel,
+      screen: AddTravelNav,
       navigationOptions: () => ({
-        header: props => (
-          <AppBar
-            leftComponent={<Icon name="chevron-left" onPress={() => { props.goBack(); }} />}
-            title="Ajouter un trajet"
-            {...props}
-          />
-        ),
-      }),
-    },
-    SelectLocation: {
-      screen: SelectLocation,
-      navigationOptions: () => ({
-        header: props => (
-          <AppBar
-            leftComponent={(
-              <Icon
-                name="chevron-left"
-                onPress={() => {
-                  props.navigation.goBack(null);
-                }}
-              />
-)}
-            title="Sélectionnez un lieu"
-            {...props}
-          />
-        ),
+        header: null,
       }),
     },
   }, {
-    initialRouteName: 'AddTravel',
+    initialRouteName: 'Home',
   },
 );
 

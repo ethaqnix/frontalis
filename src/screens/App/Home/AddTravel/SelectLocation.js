@@ -1,9 +1,9 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { View } from 'react-native';
 import { Text } from 'react-native-elements';
-import SelectInput from '../../../components/SelectInput';
+import PropTypes from 'prop-types';
+import SelectInput from '../../../../components/SelectInput';
 
 const GET_LOCATIONS = gql`
   query locations {
@@ -19,6 +19,7 @@ const SelectLocation = (props) => {
   return (
     <Query query={GET_LOCATIONS} variables={{}}>
       {({ loading, error, data }) => {
+        console.log(loading);
         if (loading) return null;
         if (error) {
           return (<Text>error</Text>);
@@ -33,6 +34,10 @@ const SelectLocation = (props) => {
       }}
     </Query>
   );
+};
+
+SelectLocation.propTypes = {
+  navigation: PropTypes.shape({}).isRequired,
 };
 
 export default SelectLocation;

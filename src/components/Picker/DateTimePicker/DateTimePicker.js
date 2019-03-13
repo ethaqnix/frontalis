@@ -136,7 +136,7 @@ export default class DateTimePicker extends Component {
 DateTimePicker.propTypes = {
   label: PropTypes.string,
   onSelect: PropTypes.func,
-},
+};
 
 DateTimePicker.defaultProps = {
   label: '',

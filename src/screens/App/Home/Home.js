@@ -12,11 +12,11 @@ const styles = StyleSheet.create({
 });
 class Home extends React.PureComponent {
   render() {
-    const { theme, navigation } = this.props;
+    const { theme } = this.props;
     return (
       <View style={styles.root}>
         <Search />
-        <TravelList />
+        {/* <TravelList /> */}
       </View>
     );
   }
@@ -29,15 +29,5 @@ Home.propTypes = {
 Home.defaultProps = {
   theme: undefined,
 };
-
-
-Home.navigationOptions = {
-  title: 'Home',
-  headerTintColor: '#fff',
-  headerTitleStyle: {
-    fontWeight: 'bold',
-  },
-};
-
 
 export default withTheme(Home);
